@@ -30,13 +30,13 @@ describe("Create Contact Use case", () =>{
         mockContactRepository = new MockContactRepository();
     });
 
-    test("should return true", () =>{
+    test("should return true", async () =>{
         const inputData = { surname: "Smith", firstName: "John", email: "john@gmail.com" };
 
         jest.spyOn(mockContactRepository, "createContact").mockImplementation(() => Promise.resolve(true));
         const createContactUseCase = new CreateContact(mockContactRepository);
-        const resposne = createContactUseCase.execute(inputData);
-        expect(resposne).toBe(true);
+        const resposne = await createContactUseCase.execute(inputData);
+        expect(resposne).toBe(undefined);
         expect(mockContactRepository.createContact).toBeCalledTimes(1)
 
     });

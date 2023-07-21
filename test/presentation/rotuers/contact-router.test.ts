@@ -47,7 +47,7 @@ describe('Contact Router', () =>{
         });
 
         test ('get /contact return 500 on use case error', async ()=>{
-            jest.spyOn(mockGetAllContactsUseCase, "execute").mockImplementation(() => Promise.reject(Error()));
+            jest.spyOn(MockGetAllContactsUseCase.prototype, "execute").mockImplementation(() => Promise.reject(Error()));
             const response = await request(server).get('/contact');
 
             expect(response.status).toBe(500);
@@ -59,7 +59,7 @@ describe('Contact Router', () =>{
     describe("POST /contact",() =>{
         test("POST /contact", async ()=>{
             const inputData = {  surname: "Smith", firstName: "John", email: "john@gmail.com" };
-            jest.spyOn(mockCreateContactUseCase, "execute").mockImplementation(() => Promise.resolve(true));
+            jest.spyOn(MockCreateContactUseCase.prototype, "execute").mockImplementation(() => Promise.resolve(inputData));
             const response = await request(server).post('/contact').send(inputData);
 
             expect(response.status).toBe(201);
@@ -68,7 +68,7 @@ describe('Contact Router', () =>{
 
         test("POST /Contact return 500 on use case error", async () => {
             const inputData = {  surname: "Smith", firstName: "John", email: "john@gmail.com" };
-            jest.spyOn(mockCreateContactUseCase, "execute").mockImplementation(() => Promise.reject(Error()));
+            jest.spyOn(MockCreateContactUseCase.prototype, "execute").mockImplementation(() => Promise.reject(Error()));
             const response =  await request(server).post("/contact").send(inputData);
 
             expect(response.status).toBe(500);
